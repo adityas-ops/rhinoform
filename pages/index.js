@@ -1,118 +1,286 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-
-const inter = Inter({ subsets: ['latin'] })
+import { useState } from "react";
 
 export default function Home() {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    //
+  };
+  const [gender, setgender] = useState("");
+
+  //  for education
+  const [educationList, setEducationList] = useState([
+    { college: "", startDate: "", endDate: "", degree: "" },
+  ]);
+
+  const handleInputChange = (index, e) => {
+    const { name, value } = e.target;
+    const list = [...educationList];
+    list[index][name] = value;
+    setEducationList(list);
+  };
+
+  const handleAddEducation = () => {
+    setEducationList([
+      ...educationList,
+      { college: "", startDate: "", endDate: "", degree: "" },
+    ]);
+  };
+
+  const handleDeleteEducation = (index) => {
+    const list = [...educationList];
+    list.splice(index, 1);
+    setEducationList(list);
+  };
+
+  // for experience
+
+  //  achievements 
+  const [achievelist, setAchievelist] = useState([
+    { achieve: '' },
+  ]);
+
+  const handleInputChangeA = (index, e) => {
+    const { name, value } = e.target;
+    const list = [...achievelist];
+    list[index][name] = value;
+    setAchievelist(list);
+  };
+
+  const handleAddEducationA = () => {
+    setAchievelist([
+      ...achievelist,
+      {achieve: '' },
+    ]);
+  };
+
+  const handleDeleteEducationA = (index) => {
+    const list = [...achievelist];
+    list.splice(index, 1);
+    setAchievelist(list);
+  };
+
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
-    >
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">pages/index.js</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <>
+      <div className="w-full h-full font-jetBrain  overflow-y-scroll">
+        {/* header part */}
+        <div className="w-full h-[60px] border-b bg-white z-50 border-zinc-300 fixed"></div>
+        <div className=" mt-[60px] w-full h-full flex justify-center">
+          <form
+            onSubmit={handleSubmit}
+            className="mt-[2.5rem] pt-10 mb-20 lg:w-[50%] md:w-[80%] w-[90%]  h-full  border-t px-5 border-zinc-300"
           >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+            <h2 className="text-[1.25rem] font-[600]">Basic Information</h2>
+            <div className="pt-6">
+              <label className="text-[1.125rem] font-[400]">
+                Full Name <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                required
+                className="w-full py-2 mt-3 px-3 bg-[#F6F6F6]  border border-zinc-300"
+              />
+            </div>
+            <div className="pt-6">
+              <label className="text-[1.125rem] font-[400]">
+                Email <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="email"
+                required
+                className="w-full py-2 mt-3 px-3 bg-[#F6F6F6]  border border-zinc-300"
+              />
+            </div>
+            <div className="pt-6">
+              <label className="text-[1.125rem] font-[400]">
+                Phone number <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="tel"
+                required
+                placeholder="ex: +91XXXXXXXXXX"
+                className="w-full py-2 mt-3 px-3 bg-[#F6F6F6]  border border-zinc-300 active:border-red-500 focus:border-"
+              />
+            </div>
+            <div className="pt-6">
+              <label className="text-[1.125rem] font-[400]">
+                Gender <span className="text-red-500">*</span>
+              </label>
+              <div className="mt-3">
+                <input
+                  type="radio"
+                  id="male"
+                  name="gender"
+                  value="male"
+                  checked={gender === "male"}
+                  // onChange={handleGenderChange}
+                  className="mr-2"
+                />
+                <label htmlFor="male" className="mr-4">
+                  Male
+                </label>
+
+                <input
+                  type="radio"
+                  id="female"
+                  name="gender"
+                  value="female"
+                  checked={gender === "female"}
+                  // onChange={handleGenderChange}
+                  className="mr-2"
+                />
+                <label htmlFor="female">Female</label>
+              </div>
+            </div>
+            <div className="pt-6 flex items-center justify-between">
+              <label className="text-[1.125rem] font-[400] whitespace-nowrap">
+                age <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="number"
+                required
+                className="w-[90%] py-2 mt-3 px-3 bg-[#F6F6F6]  border border-zinc-300 active:border-red-500 focus:border-"
+              />
+            </div>
+            {/* address  */}
+            <h2 className="text-[1.25rem] font-[600] mt-10 pt-2 border-t border-zinc-300">
+              Address
+            </h2>
+            <div className="pt-6">
+              <label className="text-[1.125rem] font-[400]">
+                City <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                required
+                className="w-full py-2 mt-3 px-3 bg-[#F6F6F6]  border border-zinc-300"
+              />
+            </div>
+            <div className="pt-6">
+              <label className="text-[1.125rem] font-[400]">
+                State <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                required
+                className="w-full py-2 mt-3 px-3 bg-[#F6F6F6]  border border-zinc-300"
+              />
+            </div>
+            {/* education start */}
+            <h2 className="text-[1.25rem] font-[600] mt-10 pt-2 border-t border-zinc-300">
+              Education
+            </h2>
+            {/* <div className="pt-6"> */}
+              {educationList.map((education, index) => (
+                <div key={index} className="py-8 border-b border-zinc-300"  >
+                <div className="mb-4">
+                  <label className="text-[1.125rem] font-[400]">
+                    College name <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    className="w-full py-2 mt-3 px-3 bg-[#F6F6F6]  border border-zinc-300"
+                  />
+                  </div>
+                  <div className="mb-4">
+                  <label className="text-[1.125rem] font-[400]">
+                   Degree <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    className="w-full py-2 mt-3 px-3 bg-[#F6F6F6]  border border-zinc-300"
+                  />
+                  </div>
+                  <div className="flex justify-between pt-2">
+                    <div className="flex items-center">
+                      <label className="text-[1.125rem] font-[400]">
+                        Start date <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="date"
+                        required
+                        className="py-2 mt-3 ml-3 px-3 bg-[#F6F6F6]  border border-zinc-300"/>
+                    </div>
+                    <div className="flex items-center">
+              <label className="text-[1.125rem] font-[400]">
+                End date <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="date"
+                required
+                className="
+                py-2 mt-3 ml-3 px-3 bg-[#F6F6F6]  border border-zinc-300"
+              />
+              </div>
+                  </div>
+                </div>
+              ))}
+             <div className="pt-8 w-full flex justify-between">
+             <button type="button"
+          className="bg-zinc-300  px-4 py-2 w-[40%] rounded mb-4 hover:bg-zinc-200"
+          onClick={handleAddEducation}
+          >Add Education</button>
+          {
+            educationList.length > 1 && (
+              <button
+              type="button"
+              className="bg-zinc-300  px-4 py-2 w-[40%] rounded mb-4 hover:bg-zinc-200"
+              onClick={handleDeleteEducation}
+              >Remove Education</button>
+            )
+          }
+          {/*  achievement start */}
+             </div>
+             {/* achievement start */}
+            <h2 className="text-[1.25rem] font-[600] mt-10 pt-2 border-t border-zinc-300">
+             Achievement
+            </h2>
+            <div className="pt-6">
+              {achievelist.map((achieve, index) => (
+                <div key={index} className="py-1 "  >
+                <div className="mb-3 flex items-center ">
+                <p className="mr-4">{index+1}.</p>
+                  <input
+                    type="text"
+                    required
+                    className="w-full py-2 mt-3 px-3 bg-[#F6F6F6]  border border-zinc-300"
+                  />
+                  </div>
+                    </div>
+              ))}
+             <div className="pt-8 w-full flex justify-between">
+             <button type="button"
+          className="bg-zinc-300  px-4 py-2 w-[40%] rounded mb-4 hover:bg-zinc-200"
+          onClick={handleAddEducationA}
+          >Add Achievement</button>
+          {
+            achievelist.length > 1 && (
+              <button
+              type="button"
+              className="bg-zinc-300  px-4 py-2 w-[40%] rounded mb-4 hover:bg-zinc-200"
+              onClick={handleDeleteEducationA}
+              >Remove Achievement</button>
+            )
+          }
+          </div>
+          </div>
+            {/* achievement end */}
+            {/* file upload cv */}
+            <div className="pt-4 mt-4 border-t border-zinc-300">
+              <label className="text-[1.125rem] font-[400]">
+                Upload CV <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="file"
+                required
+                className="w-full py-2 mt-3 px-3 bg-[#F6F6F6]  border border-zinc-300"
+              />
+            </div>
+            {/* submit button */}
+          </form>
         </div>
       </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700/10 after:dark:from-sky-900 after:dark:via-[#0141ff]/40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Discover and deploy boilerplate example Next.js&nbsp;projects.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+    </>
+  );
 }
